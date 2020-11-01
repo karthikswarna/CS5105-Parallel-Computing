@@ -12,6 +12,12 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
+    if(argc < 2)
+    {
+        cerr << "Size of the array is expected as argument!\nFormat: mpiexec -np <proc> ./a.out <size>" << endl;
+        exit(0);
+    }
+
     int np, rank, length, chunksize, localSum = 0, totalSum = 0;
     int *array;
 
