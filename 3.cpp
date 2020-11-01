@@ -29,6 +29,7 @@ int main(int argc, char **argv)
     length = atoi(argv[1]);
     chunksize = length / np;
     
+    /* MASTER PROCESS */
     if(rank == 0)
     {
         /* Sending offsets to slave processes */
@@ -49,6 +50,7 @@ int main(int argc, char **argv)
 
         cout << "Total Sum: " << totalSum << endl;
     }
+    /* SLAVE PROCESSES */
     else
     {
         /* Receives the offset from master process */
