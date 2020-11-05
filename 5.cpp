@@ -33,7 +33,7 @@ int main(int argc, char **argv)
     default_random_engine re;
     vector<int> data;
     for (int i = 0; i < ndata; i++)
-        data.push_back(dist(re));
+        data.push_back(dist(re));   /* Pseudo-random numbers */
 
     /* Creating and launching a vector of threads */
     vector<thread> threads;

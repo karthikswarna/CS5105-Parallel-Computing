@@ -45,8 +45,8 @@ int main(int argc, char **argv)
         /* Filling up the array with random data */
         uniform_real_distribution<double> dist(0, 100);
         default_random_engine re;
-        random_device rd;
-		mt19937 mt(rd());
+        // random_device rd;
+		// mt19937 mt(rd());
         for (int i = 0; i < length; i++)
             // array[i] = dist(mt);        /* This line is used for random numbers */
             array[i] = dist(re);        /* This line is used for pseudo-random numbers */
