@@ -5,21 +5,27 @@
 
 #include <iostream>
 #include <random>
-#include "mpi.h"
+#include <chrono> 
+#include <mpi.h>
+#include <omp.h>
 
 using namespace std;
 
 int main(int argc, char **argv)
 {
-    if(argc < 2)
+    if(argc < 3)
     {
-        cerr << "Size of the array is expected as argument!\nFormat: mpiexec -np <proc> ./a.out <size>" << endl;
+        cerr << "Size of the array, Number of threads are expected as arguments!\nFormat: mpiexec -np <nproc> ./a.out <size> <nthreads>" << endl;
         exit(0);
     }
 
-    int np, rank, length, chunksize, localSum = 0, totalSum = 0;
+    int np, rank, nthreads, length, chunksize, localSum = 0, totalSum = 0;
     int *array;
 
+    /* Set the number of threads in each process */
+    nthreads = atoi(argv[2]);
+    omp_set_num_threads(nthreads);
+    
     MPI_Init(&argc, &argv);
 
     MPI_Comm_size(MPI_COMM_WORLD , &np);
@@ -44,10 +50,7 @@ int main(int argc, char **argv)
         /* Filling up the array with random data */
         uniform_real_distribution<double> dist(0, 100);
         default_random_engine re;
-        // random_device rd;
-		// mt19937 mt(rd());
         for (int i = 0; i < length; i++)
-            // array[i] = dist(mt);        /* This line is used for random numbers */
             array[i] = dist(re);        /* This line is used for pseudo-random numbers */
         
 
@@ -60,7 +63,8 @@ int main(int argc, char **argv)
             offset += chunksize;
         }
 
-        /* Master process computes the sum of first "chunksize + leftover" number of elements */
+        /* Master process computes the sum of first "chunksize + leftover" number of elements using threads*/
+        #pragma omp parallel for reduction(+: localSum)
         for(int i = 0; i < chunksize + leftover; i++)
             localSum += array[i];
 
@@ -77,7 +81,8 @@ int main(int argc, char **argv)
         array = new int[chunksize];
         MPI_Recv(array, chunksize, MPI_INT, 0, 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
-        /* Computes local sum */
+        /* Computes local sum using threads */
+        #pragma omp parallel for reduction(+: localSum)
         for(int i = 0; i < chunksize; i++)
             localSum += array[i];
 
