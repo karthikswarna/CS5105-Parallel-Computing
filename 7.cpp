@@ -1,6 +1,6 @@
 /*
- * Author: S. Karthik Chandra 
- * Roll  : CS17B026
+ *  Author: S. Karthik Chandra 
+ *  Roll  : CS17B026
  */
 
 #include <iostream>
@@ -41,7 +41,7 @@ int main(int argc, char **argv)
         array = new(nothrow) int[length];
         if(!array)
         {
-            cout << "Memory allocation for array failed" << endl;
+            cerr << "Memory allocation for array failed" << endl;
             MPI_Abort(MPI_COMM_WORLD, 0);
             exit(0);
         }
