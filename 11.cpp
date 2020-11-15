@@ -1,3 +1,8 @@
+/*
+ *  Author: S. Karthik Chandra
+ *  Roll  : CS17B026
+ */
+
 #include <mpi.h>
 #include <thread>
 #include <vector>
