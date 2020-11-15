@@ -40,10 +40,6 @@ int main(int argc, char *argv[])
     for(int i = 0; i < m; ++i)
         c[i] = new double[p];
 
-    double** d = new double*[m];
-    for(int i = 0; i < m; ++i)
-        d[i] = new double[p];
-    
     if(!a || !b || !c)
     {
         cerr << "Memory allocation for array failed" << endl;
