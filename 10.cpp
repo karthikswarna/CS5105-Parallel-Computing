@@ -12,7 +12,7 @@ int main(int argc, char **argv)
 {
     if(argc < 3)
     {
-        cerr << "Size of the array, Number of iterations are expected as arguments!\nFormat: mpiexec -np <nproc> ./array.out <size> <iterations>" << endl;
+        cerr << "Size of the array, Number of iterations are expected as arguments!\nFormat: mpiexec -np <nproc> ./a.out <size> <iterations>" << endl;
         exit(0);
     }
     int length = atoi(argv[1]);

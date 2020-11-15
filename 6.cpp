@@ -12,11 +12,15 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-    if(argc < 2)
+    if(argc < 3)
     {
-        cerr << "Size of the array is expected as argument!\nFormat: ./a.out <size>" << endl;
+        cerr << "Size of the array is expected as argument!\nFormat: ./a.out <size> <nthreads>" << endl;
         exit(0);
     }
+
+    /* Set the number of threads in each process */
+    int nthreads = atoi(argv[2]);
+    omp_set_num_threads(nthreads);
 
     int length = atoi(argv[1]);
     int *array = new(nothrow) int[length];
